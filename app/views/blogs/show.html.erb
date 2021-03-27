@@ -1,0 +1,36 @@
+ <p>記事</p>
+ <% @blogs.each do |blog| %>
+      <tr>
+        <td><%= blog.title %></td>
+        <td><%= blog.body.truncate(60)  %></td>
+ <% end %>
+  <h3>コメント</h3>
+
+   <p>
+  <% @blog.comments.each do |comment| %>
+    <thead>
+    <tr>
+      <th><%= comment.commenter %></th>
+      <th><%= comment.body %></th>
+      <th><%= link_to '削除', [comment.blog, comment],
+                  :confirm => 'よろしいですか？',
+                  :method => :delete %></th>
+    </tr>
+    </p>
+     </thead>
+<% end %>
+ 
+  
+
+  <h3>コメントを書く</h3>
+  <%= form_for([@blog, @blog.comments.build]) do |f| %>
+    <div class="field mb-2">
+      <%= f.text_field :commenter, placeholder: 'お名前', class: 'form-control' %>
+    </div>
+    <div class="field mb-2">
+      <%= f.text_area :body, placeholder: '本文を入力してください',class: 'form-control' %>
+    </div>
+    <div class="actions">
+      <%= f.submit "投稿する", class: 'btn btn-block btn-success btn-sm' %>
+    </div>
+  <% end %>
